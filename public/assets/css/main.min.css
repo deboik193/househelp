@@ -1,0 +1,15 @@
+.separator{
+  display:flex;
+  align-items: center;
+  margin: 18px auto;
+}
+
+.separator .line{
+  height: .5px;
+  flex: 1;
+  background-color: rgba(170, 170, 170, 0.5);
+}
+
+.separator h2{
+  padding: 0 2rem;
+}
