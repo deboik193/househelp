@@ -7,6 +7,37 @@ function historyGo() {
 }
 
 // date
-const d = new Date();
-let year = d.getFullYear();
-document.getElementById("getDate").innerHTML = year;
+function changeEveryYear() {
+    const d = new Date();
+    let year = d.getFullYear();
+    document.getElementById("getDate").innerHTML = year;
+}
+changeEveryYear()
+
+
+// this code for form-wizard
+// function formWizard() {
+    
+    
+// }
+// formWizard()
+    // let getCurrentItem
+    // let listButton = document.querySelectorAll('.form-wizard')
+    //  listButton.forEach((listButton, index) => {
+    //     if (listButton == index) {
+    //         console.log('corrrt')
+    //     }
+    // })
+
+
+function changeForm() {
+    let firstForm = document.getElementById('1')
+    let secondForm = document.getElementById('2')
+    let thirdForm = document.getElementById('3')
+
+    firstForm.classList.toggle('d-none')
+    secondForm.classList.toggle('d-none')
+
+   
+    console.log('clicked')
+}

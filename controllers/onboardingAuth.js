@@ -28,7 +28,7 @@ exports.renderPost = async (req, res) => {
     const user = new Basic(_body)
 
     try {
-        const checkIfEmailExist = await Basic.findOne({ email: user.email })
+        const checkIfEmailExist = await Basic.findOne({ email: user.email }).lean()
         if (!checkIfEmailExist) {
             if (_body.password.length < 5) {
                 res.render('onboarding/register', { layout: 'login', message: "password is too short" })
@@ -72,7 +72,7 @@ exports.renderVerifyEmail = async (req, res) => {
     const emailToken = req.query.token
 
     try {
-        const user = await Basic.find()
+        const user = await Basic.find({emailToken: emailToken}).lean()
         if (user[0].isVerified) {
             res.render('onboarding/verify-email', {
                 layout: 'login',
@@ -85,12 +85,11 @@ exports.renderVerifyEmail = async (req, res) => {
                     message: 'your email token is invalid or expired'
                 })
             } else {
-                await Basic.findOneAndUpdate({ isVerified: true })
+                await Basic.findByIdAndUpdate({_id: user[0]._id}, { isVerified: true }).lean()
                 res.render('onboarding/verify-email', {
                     layout: 'login',
                     message: 'congratulations your email is verified'
                 })
-
             }
         }
 
@@ -108,13 +107,13 @@ this route will log a user in if credentials correspond
 exports.renderLogin = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await Basic.findOne({ email: email })
+        const user = await Basic.findOne({ email: email }).lean()
         const comparedPwd = await bcrypt.compare(password, user.password)
         if (user && comparedPwd) {
             if (user.isVerified) {
                 const createRefreshToken = refreshToken(user)
                 res.cookie('access-token', createRefreshToken, {
-                    maxAge: 60 * 60 * 24 * 30 * 1000,
+                    maxAge: 60 * 60 * 24 * 1000,
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
                 })
@@ -149,7 +148,7 @@ exports.renderLogin = async (req, res) => {
 
         try {
 
-            const checkIfEmailExist = await Basic.findOne({ email: email })
+            const checkIfEmailExist = await Basic.findOne({ email: email }).lean()
             if (checkIfEmailExist) {
                 res.render('onboarding/login-success', {
                     layout: 'login',
@@ -190,7 +189,7 @@ this route will call the UI for change password
 exports.renderChangePwd = async (req, res) => {
     const id = req.query.pwd
     try {
-        const user = await Basic.findOne({ _id: id })
+        const user = await Basic.findOne({ _id: id }).lean()
         if (user) {
             res.render('onboarding/change-password', {
                 layout: 'login'
@@ -224,7 +223,7 @@ exports.renderResetPwd = async (req, res) => {
         } else {
             const salt = await bcrypt.genSalt(10)
             let passw = await bcrypt.hash(pass, salt)
-            await Basic.findOneAndUpdate({ password: passw })
+            await Basic.findOneAndUpdate({ password: passw }).lean()
             res.render('onboarding/login-success', {
                 layout: 'login',
                 message: 'password updated successfuly'
@@ -236,14 +235,4 @@ exports.renderResetPwd = async (req, res) => {
             message: error
         })
     }
-}
-
-/*
-this routes logs a user out of dashboard or equivalent
-*/
-
-exports.renderLogout = async (req, res) => {
-    return res
-        .clearCookie("access-token")
-        .redirect('/')
-}
+}   

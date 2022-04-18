@@ -1,6 +1,7 @@
 const moongoose = require('mongoose')
 
 const profileInfo = moongoose.Schema({
+    date: { type: Date, default: Date.now },
     dateOfBirth: {
         type: Date,
         required: true
@@ -9,7 +10,7 @@ const profileInfo = moongoose.Schema({
         type: String,
         required: true
     },
-    image: {
+    profileImage: {
         type: String,
         required: true
     },
@@ -18,18 +19,26 @@ const profileInfo = moongoose.Schema({
         required: true
     },
     nameOfSponse: {
+        type: String
+    },
+    domesticService: {
+        type: String,
+        required: true
+    },
+    religion: {
         type: String,
         required: true
     },
     howManyChildren: {
-        type: Number,
-        required: true
+        type: Number
+    },
+    phoneNumber: {
+        type: Number
     },
     basic: {
         type: moongoose.Schema.Types.ObjectId,
         ref: 'houseBasicInfo'
-    },
-
+    }
 })
 
 module.exports = moongoose.model('profileInfo', profileInfo)

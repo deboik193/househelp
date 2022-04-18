@@ -1,6 +1,6 @@
 const express = require('express')
 const Router = express.Router()
-const controllers = require('../../controllers/profileInfo')
+const controllers = require('../../controllers/profileAuth')
 
 Router.get('/', controllers.renderGet)
 

@@ -1,0 +1,67 @@
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader-icon"></div>
+    <span>Loading...</span>
+</div>
+<!-- ./ Preloader -->
+
+<div class="container" >
+    <ul class="">
+        <li class="btn btn-primary form-wizard"> <span class="rounded-border">1</span> Personal Information</li>
+        <li class="btn disable form-wizard"> <span class="rounded-border">2</span> Personal Information</li>
+        <li class="btn disable form-wizard"> <span class="rounded-border">3</span> Personal Information</li>
+    </ul>
+    <div>
+        <div class="" id="1">
+            <h3>Personal Information</h3>
+            <section class="card border card-body mb-0">
+                <h5>Personal Information</h5>
+                <p>Try the keyboard navigation by clicking arrow left or right!</p>
+                <form id="form1" action="/basic/kyc" method="post">
+                    <div class="form-group wd-xs-300">
+                        <label>First name</label>
+                        <input type="text" class="form-control" placeholder="First name" name="fname" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="form-group wd-xs-300">
+                        <label>Last name</label>
+                        <input type="text" class="form-control" name="lname" placeholder="Enter lastname" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="d-none" id="2">
+            <h3>Billing Information</h3>
+            <section class="card card-body border mb-0">
+                <h5>Billing Information</h5>
+                <p>Wonderful transition effects.</p>
+                <form id="form2" action="/basic/kyc" method="post">
+                    <div class="form-group wd-xs-300">
+                        <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                        <input id="email" class="form-control" name="email" placeholder="Enter email address"
+                            type="email" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="d-none" id="3">
+            <h3>Payment Details</h3>
+            <section class="card card-body border mb-0">
+                <h5>Payment Details</h5>
+                <p>The next and previous buttons help you to navigate through your content.</p>
+            </section>
+        </div>
+
+        <div class="text-right my-3">
+            <button class="btn btn-primary" onclick="changeForm()">Next</button>
+        </div>
+    </div>
+</div>

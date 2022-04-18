@@ -1,16 +1,21 @@
 
 exports.renderGet = async (req, res) => {
     try {
-        const user = await Basic.find()
+        const user = await Basic.find().lean()
         res.status(201).send({ success: true, data: user })
     } catch (err) {
         res.status(500).send({ success: true, data: err })
     }
 }
 
+exports.renderKYC = async (req, res) => {
+    const check = req.body
+    console.log('form wizard', check)
+}
+
 exports.renderGetId = async (req, res) => {
     try {
-        const singleUser = await Basic.findById(req.params.Id)
+        const singleUser = await Basic.findById(req.params.Id).lean()
         if (!singleUser) {
             return res.status(404).json({ success: false, message: "Account not found" })
         }
@@ -29,7 +34,7 @@ exports.renderUpdate = async (req, res) => {
             } else {
                 res.status(404).json({ success: false, message: "User Not Found", data: err })
             }
-        })
+        }).lean()
 
     } catch (e) {
         res.status(500).json({ error: e })
@@ -37,7 +42,7 @@ exports.renderUpdate = async (req, res) => {
 }
 exports.renderDelete = async (req, res) => {
     try {
-        const delSingleUser = await Basic.findByIdAndDelete({ _id: req.params.Id })
+        const delSingleUser = await Basic.findByIdAndDelete({ _id: req.params.Id }).lean()
         if (!delSingleUser) {
             return res.status(404).json({ message: "No Account to be deleted" })
         }

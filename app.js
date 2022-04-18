@@ -2,8 +2,10 @@ const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const { engine } = require('express-handlebars')
+// const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const path = require('path')
 const methodOverride = require('method-override')
+const { currentUser } = require('./middleware/validateToken')
 
 //.env load config
 dotenv.config({ path: "./config/config.env" })
@@ -34,14 +36,19 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 
+// handlebars helper function
+require('./lib/helper')
+
 // static folder
 app.use(express.static(path.join(__dirname, 'public')))
 
 const cookieParser = require('cookie-parser')
-const error = require("./middleware/error")
+// const error = require("./middleware/error")
 app.use(cookieParser())
-app.use(error.errorHandler)
+// app.use(error.errorHandler)
 
+
+app.get('*', currentUser)
 app.use('/', require('./router/unAuth/index'))
 app.use('/basic', require('./router/auth/basicInfo'))
 app.use('/profile', require('./router/auth/profileInfo'))
